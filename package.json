@@ -1,6 +1,6 @@
 {
   "name": "@krizzu/eslint-check-action",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "GitHub action running eslint check in your project, annotating errors/warnings in PR.",
   "main": "dist/index.js",
   "author": "Krzysztof Borowy <dev@krizzu.dev>",
