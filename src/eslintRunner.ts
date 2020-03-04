@@ -21,7 +21,50 @@ class EslintRunner {
     this.checkRunID = await this.startGitHubCheck();
     const report = this.runEslintCheck()!;
     const { success, annotations, counts } = this.prepareAnnotation(report);
-    this.finishGitHubCheck(success, annotations, counts);
+
+    // if annotations are too large, split them into check-updates
+    let restOfAnnotation = await this.handleAnnotations(annotations, counts);
+
+    this.finishGitHubCheck(success, restOfAnnotation, counts);
+  };
+
+  private handleAnnotations = async (
+    annotations: Array<GitHubAnnotation>,
+    counts: ReportCounts
+  ) => {
+    let leftAnnotations = [...annotations];
+    if (leftAnnotations.length > 50) {
+      while (leftAnnotations.length > 50) {
+        let toProcess = leftAnnotations.splice(0, 50);
+        try {
+          await this.updateAnnotation(toProcess, counts);
+        } catch (e) {
+          exitWithError(`Fail processing annotations: ${e.message}`);
+        }
+      }
+    }
+    return leftAnnotations;
+  };
+
+  private updateAnnotation = async (
+    annotations: Array<GitHubAnnotation>,
+    counts: ReportCounts
+  ) => {
+    try {
+      await this.kit.checks.update({
+        owner: this.opts.repoOwner,
+        repo: this.opts.repoName,
+        check_run_id: this.checkRunID,
+        status: 'in_progress',
+        output: {
+          title: this.name,
+          summary: `Found ${counts.error} error(s), ${counts.warning} warning(s).`,
+          annotations,
+        },
+      });
+    } catch (e) {
+      exitWithError(e.message);
+    }
   };
 
   private startGitHubCheck = async () => {
