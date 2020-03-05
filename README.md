@@ -2,25 +2,30 @@
 
 GitHub action running eslint check in your project, annotating errors/warnings in PR.
 
+
+## Features
+
+- Customizable
+- Installs project dependencies if missing
+- Annotates lines in PR with warnings and errors
+
 ## Usage
 
 Add workflow to your project (ex. `.github/workflows/eslint.yml`):
 
 ```yaml
-name: Eslint check
+name: Lint
 on: [push]
 jobs:
   eslint_check:
-    name: prepare
+    name: Prepare action
     runs-on: ubuntu-latest
     steps:
       # Checkout action must run prior to eslint check
     - name: Checkout 
       uses: actions/checkout@v1
-    - name: Install dependencies
-      run: yarn install
     - name: Lint
-      uses: Krizzu/eslint-check-action@v1.0.0
+      uses: Krizzu/eslint-check-action@v1.2.0
       with:
         ghToken: ${{ secrets.GITHUB_TOKEN }}
         eslintFiles: "lib, scripts"
@@ -44,7 +49,7 @@ Default: `.eslintrc`
 
 **eslintExt**
 
-File extension to run linting on. 
+File extension to run linting on.
 Default: `js, ts, jsx, tsx`
 
 ## License
