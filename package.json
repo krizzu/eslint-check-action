@@ -1,6 +1,6 @@
 {
   "name": "@krizzu/eslint-check-action",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "GitHub action running eslint check in your project, annotating errors/warnings in PR.",
   "main": "dist/index.js",
   "author": "Krzysztof Borowy <dev@krizzu.dev>",
@@ -8,8 +8,7 @@
   "scripts": {
     "test": "tsc",
     "dev": "source .env && yarn build && node dist/index.js",
-    "build": "rm -rf dist/ && babel src --out-dir dist/ --extensions .ts",
-    "prepublishOnly": "yarn build"
+    "build": "rm -rf dist/ && babel src --out-dir dist/ --extensions .ts"
   },
   "dependencies": {
     "@actions/core": "1.2.0",

@@ -1,13 +1,13 @@
 #!/bin/sh
 
-cd "/eslint_check_action"
 
-yarn install
+cd $GITHUB_WORKSPACE
 
-main=./dist/index.js
-
-if [ ! -f "$main" ]; then
-    yarn build
+if [ ! -d "node_modules" ]; then
+    echo "Repo dependencies not installed. Installing..."
+    yarn install
 fi
 
-node "$main"
+cd "/eslint_check_action" || exit
+
+node "/eslint_check_action/dist/index.js"
