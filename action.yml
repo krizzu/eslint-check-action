@@ -1,4 +1,4 @@
-name: 'Eslint check action'
+name: 'Eslint check'
 description: "GitHub action running eslint check in your project, annotating errors/warnings in PR."
 author: "krizzu"
 inputs:
@@ -6,12 +6,15 @@ inputs:
     description: 'GitHub token'
     required: true
   eslintFiles:
+    required: false
     description: 'Relative path to files/directories to run lint on.'
     default: '.'
   eslintConfig:
+    required: false
     description: 'Relative path to eslint config. Can either be ".js" config, ".eslintrc" or "package.json".'
     default: '.eslintrc'
   eslintExt:
+    required: false
     description: 'File extension to run linting on.'
     default: 'js, ts, jsx, tsx'
 runs:
