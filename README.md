@@ -29,7 +29,7 @@ jobs:
       with:
         ghToken: ${{ secrets.GITHUB_TOKEN }}
         eslintFiles: "lib, scripts"
-        eslintConfig: "myConfigs/eslint.config.js",
+        eslintConfig: "myConfigs/eslint.config.js"
         eslintExt: "ts, tsx"
 ```
 
